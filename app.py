@@ -74,10 +74,10 @@ if uploaded_file is not None:
     # Abre la imagen utilizando PIL
     image = Image.open(uploaded_file)
 
-    # Envía la imagen a Gemini para su procesamiento (ajusta según la API)
+    # Envía la imagen a Gemini para su procesamiento
     try:
-        # Aquí se asume que hay una función para analizar la imagen
-        vision_response = gen_ai.analyze_image(image)  # Cambia esto por la función correcta según la documentación
+        # Asegúrate de usar el método correcto aquí
+        vision_response = gen_ai.process_image(image)  # Reemplaza con el método correcto
         with st.chat_message("assistant"):
             st.markdown(vision_response.text)
     except Exception as e:

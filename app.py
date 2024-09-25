@@ -2,6 +2,7 @@ import os
 import streamlit as st
 import google.generativeai as gen_ai
 from PIL import Image
+import io
 
 # Configura Streamlit
 st.set_page_config(
@@ -54,7 +55,7 @@ for message in st.session_state.chat_session.history:
 user_prompt = st.chat_input("Pregunta a IngenIAr...")
 
 # Campo para cargar imagen
-uploaded_file = st.file_uploader("Cargar una imagen", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("Cargar una imagen", type=["jpg", "jpeg", "png"], label_visibility="collapsed")
 
 if user_prompt:
     # Agrega el mensaje del usuario al chat y muéstralo
@@ -70,13 +71,13 @@ if user_prompt:
         st.error(f"Error al enviar el mensaje: {str(e)}")
 
 if uploaded_file is not None:
-    # Carga y muestra la imagen
+    # Abre la imagen utilizando PIL
     image = Image.open(uploaded_file)
-    st.image(image, caption='Imagen cargada', use_column_width=True)
 
-    # Envía la imagen a Gemini para su procesamiento
+    # Envía la imagen a Gemini para su procesamiento (ajusta según la API)
     try:
-        vision_response = gen_ai.process_image(image)  # Asegúrate de que esta función esté implementada correctamente
+        # Aquí se asume que hay una función para analizar la imagen
+        vision_response = gen_ai.analyze_image(image)  # Cambia esto por la función correcta según la documentación
         with st.chat_message("assistant"):
             st.markdown(vision_response.text)
     except Exception as e:

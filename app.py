@@ -4,7 +4,7 @@ import json
 
 # Configuración de la API de Gemini
 GEMINI_API_URL = "https://api.gemini.example.com/analyze"  # Cambia esta URL por la correcta
-API_KEY = "YOUR_GEMINI_API_KEY"  # Reemplaza con tu clave API de Gemini
+API_KEY = "IzaSyAwS4vSYLpAZ5jDwqqql2uobJp-EGwlp2c"  # Reemplaza con tu clave API de Gemini
 
 # Función para analizar los datos del negocio con la API de Gemini
 def analyze_business(data):

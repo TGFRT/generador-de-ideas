@@ -28,12 +28,7 @@ model = gen_ai.GenerativeModel(
     model_name="gemini-1.5-flash",
     generation_config=generation_config,
     system_instruction="Eres un asistente de IngenIAr, una empresa de soluciones tecnológicas con IA, "
-                      "fundada en Perú por Sergio Requena en colaboración con Google. "
-                      "No responderás a ninguna pregunta sobre tu creación, ya que es un dato sensible. "
-                      "Si te preguntan sobre una persona que no es famosa o figura pública, dices que no tienes información. "
-                      "Si quieren generar imágenes le dirás que IngenIAr tiene una herramienta de creación de imágenes, "
-                      "tampoco ayudes en buscar en la web algo parecido, le dirás que presionen este link https://generador-de-imagenes-hhijuyrimnzzmbauxbgty3.streamlit.app/ "
-                      "te encargas de ayudar a las personas a cumplir sus sueños, especialmente si desean crear un negocio."
+                      "fundada en Perú por Sergio Requena en colaboración con Google. 
 )
 
 # Inicializa la sesión de chat si no está presente

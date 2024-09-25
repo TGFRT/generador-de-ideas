@@ -1,52 +1,81 @@
 import streamlit as st
-import requests
-import json
-import os
+import google.generativeai as gen_ai
 
-# Obtener la clave API desde la variable de entorno
-API_KEY = os.getenv('GOOGLE_API_KEY')
+# Configura Streamlit
+st.set_page_config(
+    page_title="Analizador de Negocios - IngenIAr",
+    page_icon=":bar_chart:",
+    layout="centered",
+)
 
-# Configuración de la API de Gemini
-GEMINI_API_URL = "https://api.gemini.example.com/analyze"  # Cambia esta URL por la correcta
+# Obtén la clave API de las variables de entorno
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 
-# Función para analizar los datos del negocio con la API de Gemini
-def analyze_business(data):
-    headers = {
-        "Authorization": f"Bearer {API_KEY}",
-        "Content-Type": "application/json"
-    }
-    try:
-        response = requests.post(GEMINI_API_URL, headers=headers, json=data)
-        response.raise_for_status()  # Lanza un error para códigos de estado HTTP 4xx/5xx
-        return response.json()  # Devuelve el análisis
-    except requests.exceptions.RequestException as e:
-        st.error(f"Error en la conexión: {e}")
-        return None
+# Configura el modelo de Google Gemini
+gen_ai.configure(api_key=GOOGLE_API_KEY)
 
-# Interfaz de usuario
-st.title("Analizador de Negocios con IA de Gemini")
+# Configuración de generación (ajustar según el modelo)
+generation_config = {
+    "temperature": 0.7,  # Controlar la creatividad del modelo
+    "top_p": 0.95,
+    "top_k": 40,
+    "max_output_tokens": 4096,
+}
 
-# Recoger datos del negocio
-with st.form("business_form"):
-    st.subheader("Ingrese los datos de su negocio")
-    ingresos = st.number_input("Ingresos mensuales (USD)", min_value=0)
-    competencia = st.number_input("Número de competidores", min_value=0)
-    cambio_mercado = st.checkbox("¿Hay cambios en el mercado?")
+# Título de la web
+st.title("Analizador de Negocios 📈")
 
-    submitted = st.form_submit_button("Analizar")
-    if submitted:
-        data = {
-            'ingresos': ingresos,
-            'competencia': competencia,
-            'cambio_mercado': cambio_mercado
-        }
-        analysis_result = analyze_business(data)
-        
-        # Mostrar resultados
-        if analysis_result:
-            st.subheader("Resultados del Análisis")
-            st.write(f"Etapa del negocio: **{analysis_result['stage']}**")
-            st.write("Posibles amenazas:")
-            st.write("- " + "\n- ".join(analysis_result.get('threats', ["Ninguna"])))
-            st.write("Estrategias de marketing recomendadas:")
-            st.write("- " + "\n- ".join(analysis_result.get('marketing_strategies', [])))
+# Sección de datos del negocio
+st.header("Información de tu negocio")
+
+# Cajas de texto para ingresar datos del negocio
+nombre_negocio = st.text_input("Nombre del negocio")
+descripcion = st.text_area("Descripción del negocio")
+productos_servicios = st.text_area("Productos o servicios")
+mercado = st.text_area("Mercado actual")
+desafios = st.text_area("Desafíos")
+metas = st.text_area("Metas")
+
+# Botón para iniciar el análisis
+if st.button("Analizar"):
+    # Crea el modelo con instrucciones de sistema personalizadas
+    system_instruction = (
+        "Eres un analista de negocios experto. "
+        "Analiza la información del negocio y proporciona sugerencias para mejorar, "
+        "estrategias de marketing y posibles amenazas."
+    )
+
+    # Elige el modelo de Gemini (adapta según tus necesidades)
+    model = gen_ai.GenerativeModel(
+        model_name="gemini-pro",  # Ajusta el nombre del modelo
+        generation_config=generation_config,
+        system_instruction=system_instruction,
+    )
+
+    # Crea una entrada de texto con todos los datos del negocio
+    datos_negocio = f"""
+    Nombre: {nombre_negocio}
+    Descripción: {descripcion}
+    Productos/Servicios: {productos_servicios}
+    Mercado: {mercado}
+    Desafios: {desafios}
+    Metas: {metas}
+    """
+
+    # Envía la información al modelo de Gemini para su análisis
+    # ... 
+
+    # Procesa la respuesta del modelo y divide la información en:
+    # * Mejora del negocio
+    # * Estrategias de marketing
+    # * Amenazas potenciales
+
+    # Muestra los resultados en secciones bien organizadas
+    st.header("Mejora del negocio")
+    # ...
+
+    st.header("Estrategias de marketing")
+    # ...
+
+    st.header("Amenazas potenciales")
+    # ...

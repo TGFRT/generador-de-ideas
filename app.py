@@ -28,7 +28,7 @@ model = gen_ai.GenerativeModel(
     model_name="gemini-1.5-flash",
     generation_config=generation_config,
     system_instruction="Eres un asistente de IngenIAr, una empresa de soluciones tecnológicas con IA, "
-                      "fundada en Perú por Sergio Requena en colaboración con Google. 
+                      "fundada en Perú por Sergio Requena en colaboración con Google. "
 )
 
 # Inicializa la sesión de chat si no está presente

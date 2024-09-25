@@ -43,6 +43,13 @@ if st.button("Analizar"):
         "Eres un analista de negocios experto. "
         "Analiza la información del negocio y proporciona sugerencias para mejorar, "
         "estrategias de marketing y posibles amenazas."
+        "Organiza la información en tres secciones: \n"
+        "* **Mejora del negocio:** \n"
+        "* **Estrategias de marketing:** \n"
+        "* **Amenazas potenciales:** \n"
+        "Incluye ideas para reducir costos, mejorar la eficiencia, aumentar las ventas, "
+        "y estrategias concretas de campañas en redes sociales."
+        "Escribe las tres secciones en un solo texto con encabezados claros."
     )
 
     # Elige el modelo de Gemini (adapta según tus necesidades)
@@ -54,28 +61,16 @@ if st.button("Analizar"):
 
     # Crea una entrada de texto con todos los datos del negocio
     datos_negocio = f"""
-    Nombre: {nombre_negocio}
+    Nombre del negocio: {nombre_negocio}
     Descripción: {descripcion}
     Productos/Servicios: {productos_servicios}
-    Mercado: {mercado}
+    Mercado actual: {mercado}
     Desafios: {desafios}
     Metas: {metas}
     """
 
     # Envía la información al modelo de Gemini para su análisis
-    # ... 
+    response = model.generate_text(text=datos_negocio, system_instruction=system_instruction)
 
-    # Procesa la respuesta del modelo y divide la información en:
-    # * Mejora del negocio
-    # * Estrategias de marketing
-    # * Amenazas potenciales
-
-    # Muestra los resultados en secciones bien organizadas
-    st.header("Mejora del negocio")
-    # ...
-
-    st.header("Estrategias de marketing")
-    # ...
-
-    st.header("Amenazas potenciales")
-    # ...
+    # Muestra la respuesta del modelo en un solo texto
+    st.markdown(f"## Análisis de tu negocio:\n{response}")

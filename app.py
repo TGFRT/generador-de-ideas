@@ -67,7 +67,7 @@ if user_prompt or file_upload:
                 with st.chat_message("assistant"):
                     st.markdown(response_text)
             elif "crear imagen" in user_prompt.lower():
-                response_text = "Lo siento, no puedo acceder a URLs o archivos externos. Si necesitas ayuda para crear una imagen, IngenIAr tiene una herramienta de creación de imágenes. ¡Visita este enlace para empezar! [Crear Imagen](https://generador-de-imagenes-hhijuyrimnzzmbauxbgty3.streamlit.app/)"
+                response_text = "Lo siento, no puedo acceder a URLs o archivos externos. Sin embargo, si necesitas ayuda para crear una imagen, IngenIAr tiene una herramienta de creación de imágenes. ¡Visita este enlace para empezar! [Crear Imagen](https://generador-de-imagenes-hhijuyrimnzzmbauxbgty3.streamlit.app/)"
                 with st.chat_message("assistant"):
                     st.markdown(response_text)
             else:

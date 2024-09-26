@@ -63,10 +63,13 @@ if st.button("Generar Ideas"):
                                   "Proporciona ideas creativas basadas en la información proporcionada."
             )
 
-            # Generar ideas de negocio
-            response = model.generate(prompt=prompt)  # Cambia aquí para usar el método `generate`
-            
+            # Inicializa la sesión de chat
+            chat_session = model.start_chat(history=[])
+
+            # Envía el mensaje al modelo y obtiene la respuesta
+            gemini_response = chat_session.send_message(prompt)
+
             # Muestra las ideas al usuario
-            st.markdown(f"## Ideas de negocio:\n{response.text}")
+            st.markdown(f"## Ideas de negocio:\n{gemini_response.text}")
         except Exception as e:
             st.error(f"Ocurrió un error al generar las ideas: {str(e)}")

@@ -14,20 +14,6 @@ GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 # Configura el modelo de Google Gemini
 gen_ai.configure(api_key=GOOGLE_API_KEY)
 
-# Configuración de generación
-generation_config = {
-    "temperature": 0.7,
-    "top_p": 0.95,
-    "top_k": 40,
-    "max_output_tokens": 4096,
-}
-
-# Crea el modelo aquí
-model = gen_ai.GenerativeModel(
-    model_name="gemini-pro",
-    generation_config=generation_config,
-)
-
 # Título de la web
 st.title("Generador de Ideas de Negocio 💡")
 
@@ -60,8 +46,14 @@ if st.button("Generar Ideas"):
 
         # Envía el prompt a Gemini para obtener las ideas
         try:
-            response = model.generate(prompt=prompt, system_instruction="Eres un generador de ideas de negocios innovadoras.")
+            # Aquí llamamos a la API con un método diferente
+            response = gen_ai.TextGeneration.generate(
+                prompt=prompt,
+                model="gemini-pro",  # Cambia según tu modelo
+                temperature=0.7,
+                max_output_tokens=4096
+            )
             # Muestra las ideas al usuario
-            st.markdown(f"## Ideas de negocio:\n{response}")
+            st.markdown(f"## Ideas de negocio:\n{response.text}")
         except Exception as e:
             st.error(f"Ocurrió un error al generar las ideas: {e}")

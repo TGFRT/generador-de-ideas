@@ -1,5 +1,7 @@
 import streamlit as st
 import google.generativeai as gen_ai
+import os
+from dotenv import load_dotenv
 
 # Configura Streamlit
 st.set_page_config(
@@ -8,8 +10,10 @@ st.set_page_config(
     layout="centered",
 )
 
+load_dotenv()  # Carga el archivo .env
+
 # Obtén la clave API de las variables de entorno
-GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Configura el modelo de Google Gemini
 gen_ai.configure(api_key=GOOGLE_API_KEY)
@@ -36,7 +40,7 @@ mercado = st.text_area("Mercado actual")
 desafios = st.text_area("Desafíos")
 metas = st.text_area("Metas")
 
-# **Crea el modelo aquí:**
+# Crea el modelo aquí:
 # Elige el modelo de Gemini (adapta según tus necesidades)
 model = gen_ai.GenerativeModel(
     model_name="gemini-pro",  # Ajusta el nombre del modelo

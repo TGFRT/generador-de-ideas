@@ -60,10 +60,7 @@ if st.button("Generar Ideas"):
 
         # Envía el prompt a Gemini para obtener las ideas
         try:
-            response = model.generate_text(
-                text=prompt, 
-                system_instruction="Eres un generador de ideas de negocios innovadoras."
-            )
+            response = model.generate(prompt=prompt, system_instruction="Eres un generador de ideas de negocios innovadoras.")
             # Muestra las ideas al usuario
             st.markdown(f"## Ideas de negocio:\n{response}")
         except Exception as e:

@@ -1,4 +1,3 @@
-import os
 import streamlit as st
 import google.generativeai as gen_ai
 
@@ -9,8 +8,8 @@ st.set_page_config(
     layout="centered",
 )
 
-# Configura la clave API directamente (solo para propósitos de prueba)
-GOOGLE_API_KEY = "AIzaSyAwS4vSYLpAZ5jDwqqql2uobJp-EGwlp2c"  # Asegúrate de usar variables de entorno en producción
+# Obtén la clave API de las variables de entorno
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 # Configura el modelo de Google Gemini
 gen_ai.configure(api_key=GOOGLE_API_KEY)
@@ -44,12 +43,13 @@ if st.button("Generar Ideas"):
     else:
         # Crea el prompt para la API de Gemini
         prompt = f"""
-        Genera 5 ideas de negocio innovadoras para una persona con 
-        intereses: {intereses}
-        experiencia: {experiencia}
-        conocimientos: {conocimientos}
-        mercado: {mercado}
-        que busca resolver problemas: {problemas}
+        Genera 5 ideas de negocio innovadoras para una persona con las siguientes características:
+        - Intereses: {intereses}
+        - Experiencia: {experiencia}
+        - Conocimientos: {conocimientos}
+        - Mercado: {mercado}
+        - Problemas a resolver: {problemas}
+        
         Incluye una breve descripción de cada idea y su potencial mercado.
         """
 
@@ -64,9 +64,9 @@ if st.button("Generar Ideas"):
             )
 
             # Generar ideas de negocio
-            response = model.generate_text(prompt=prompt)
+            response = model.generate(prompt=prompt)  # Cambia aquí para usar el método `generate`
             
             # Muestra las ideas al usuario
-            st.markdown(f"## Ideas de negocio:\n{response['text']}")
+            st.markdown(f"## Ideas de negocio:\n{response.text}")
         except Exception as e:
             st.error(f"Ocurrió un error al generar las ideas: {str(e)}")

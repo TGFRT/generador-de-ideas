@@ -47,12 +47,13 @@ if st.button("Generar Ideas"):
         # Envía el prompt a Gemini para obtener las ideas
         try:
             # Generar texto usando la API
-            response = gen_ai.generate_text(
+            response = gen_ai.TextGeneration.generate(
+                model="gemini-pro",  # Asegúrate de usar el modelo correcto
                 prompt=prompt,
                 temperature=0.7,
                 max_output_tokens=4096
             )
             # Muestra las ideas al usuario
-            st.markdown(f"## Ideas de negocio:\n{response}")
+            st.markdown(f"## Ideas de negocio:\n{response.text}")
         except Exception as e:
             st.error(f"Ocurrió un error al generar las ideas: {e}")
